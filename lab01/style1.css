@@ -1,11 +1,17 @@
-body {
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 header {
@@ -28,18 +34,31 @@ header {
   margin: 0;
   font-size: 18px;
   transition: color 0.3s;
-  border-top: 2px solid #ff6600; 
+  border-top: 2px solid #ff6600;
   padding-bottom: 5px;
+}
+
+.menu {
+  flex: 0 0 250px;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-right: 2px solid #ff6600;
+}
+
+.menu-button {
+  display: none;
 }
 
 .menu ul {
   list-style: none;
   padding: 0;
   display: flex;
+  flex-direction: column;
 }
 
 .menu li {
-  margin-right: 20px;
+  margin: 10px 0;
 }
 
 .menu a {
@@ -47,10 +66,46 @@ header {
   color: #fff;
   font-weight: bold;
   transition: color 0.3s;
+  font-size: 20px;
+  padding: 10px 20px;
+  border: 2px solid #ff6600;
+  border-radius: 5px;
+  text-align: center;
+  display: block;
 }
 
 .menu a:hover {
-  color: #ff6600;
+  background-color: #ff6600;
+  color: #fff;
+  border-color: #333;
+}
+
+.image {
+  flex: 0 0 200px;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.image::before {
+  content: "Reklama";
+  font-weight: bold;
+  font-size: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  background-color: #ff6600;
+  padding: 5px 10px;
+  border-radius: 5px;
 }
 
 main {
@@ -77,15 +132,6 @@ main {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.image {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .image img {
   max-width: 100%;
   height: auto;
@@ -95,20 +141,10 @@ main {
   flex: 1;
   text-align: left;
   padding: 20px;
-  background-image: url('tlo.png'); 
-  background-size: cover; 
-  background-position: center; 
+  background-image: url('tlo.png');
+  background-size: cover;
+  background-position: center;
   position: relative;
-}
-
-.advertisement {
-  flex: 0 0 20%;
-  background-color: #f0f0f0;
-  padding: 20px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s;
 }
 
 footer {
@@ -118,75 +154,52 @@ footer {
   padding: 10px 0;
 }
 
-@media screen and (max-width: 600px) {
-  header {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+@media (max-width: 768px) {
+  .image {
+    display: none;
+  }
+
+  .menu {
+    flex: 0 0 100%; 
+    border-right: none; 
+    padding: 0;
   }
 
   .menu ul {
-    display: none; 
-  }
-
-  .menu-button {
-    background: #333;
-    color: #fff;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-  }
-
-  .menu-button:hover {
-    background: #ff6600;
-  }
-
-  .menu-button.active {
-    display: none;
-  }
-
-  .menu ul.active {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    flex-direction: column; 
 
   .menu li {
-    margin: 5px 0;
+    margin: 0; 
   }
 
-  .advertisement {
-    display: none; 
+  .menu a {
+    padding: 10px 0; 
+    border: none; 
+  }
+
+  main {
+    flex-direction: column;
+    padding: 10px;
   }
 
   .content {
-    flex-direction: column;
+    max-height: none; 
   }
 
-  .image {
-    order: 2;
+  .menu li {
+    margin-bottom: 10px;
   }
 
-  .info {
-    padding: 20px;
-  }
-
-  .info h2 {
-    font-size: 18px;
-  }
-
-  .info p {
+  .title {
+    text-align: center;
     text-align: left;
   }
-
-  .info ul {
-    text-align: left;
+  .title h1 {
+    font-size: 24px; 
   }
-  
+  .title h2 {
+    font-size: 18px; 
+    border-top: none; 
+  }
 }
-@media screen and (min-width: 601px) {
-  .menu-button {
-    display: none;
-  }
 }
