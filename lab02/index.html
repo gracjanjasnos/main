@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app">
+        <input type="text" id="search" placeholder="Wyszukaj...">
+        <ul id="todo-list">
+        </ul>
+        <div id="add-task">
+            <input type="text" id="new-task" placeholder="Dodaj nowe zadanie...">
+            <input type="datetime-local" id="due-date" min="" placeholder="Data wykonania">
+            <button id="add-btn">Dodaj zadanie</button>
+        </div>
+        <div id="edit-task" style="display: none;">
+            <input type="text" id="edit-task-text" placeholder="Edytuj nazwę zadania...">
+            <input type="datetime-local" id="edit-due-date" min="" placeholder="Edytuj datę wykonania">
+            <button id="save-btn">Zapisz zmiany</button>
+            <button id="cancel-btn">Anuluj</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
