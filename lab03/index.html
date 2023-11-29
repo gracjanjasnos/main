@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Map</title>
+    <link rel="stylesheet" href="leaflet-1.7.1/leaflet.css" />
+    <script src="leaflet-1.7.1/leaflet-src.js"></script>
+    <script src="leaflet-1.7.1/leaflet-providers.js"></script>
+    <script src="leaflet-1.7.1/leaflet-image.js"></script>
+
+
+    <style>
+        body {
+            background-color: #f0f0f0;
+            margin-top: 2%;
+            margin-left: 5%;
+            margin-right: 5%;
+            width: 900px;
+            height: 400px;
+            color: #333;
+        }
+
+        #interactiveMap {
+            width: 600px;
+            height: 300px;
+            margin: 5px 15px;
+        }
+
+        #mapCanvas,
+        #elementsContainer {
+            width: 300px;
+            height: 150px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        #mapCanvas {
+            margin-right: 15px;
+            border: 2px solid #3498db;
+        }
+
+        #elementsContainer {
+            margin-left: 15px;
+        }
+
+        .drag-target {
+            border: none;
+            box-sizing: border-box;
+            align-items: center;
+            border: 1px solid #3498db;
+            background-color: #fff;
+        }
+
+        div {
+            display: flex;
+        }
+
+        #elementsContainer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            background-color: #fff;
+        }
+
+        button {
+            margin: 20px 5px;
+            text-transform: uppercase;
+            border-radius: 5px;
+            padding: 10px;
+            border: none;
+            font-weight: bold;
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+   
+</head>
+<body>
+    <div id="interactiveMap"></div>
+
+    <button id="locateButton">My Location</button>
+    <button id="downloadButton">Download Map</button>
+    <button id="checkButton">Check Puzzle</button>
+
+    <div id="container">
+        <canvas id="mapCanvas"></canvas>
+        <br>
+        <div id="elementsContainer">
+            <div class="drag-target" id="item1" draggable="true"></div>
+    <div class="drag-target" id="item2" draggable="true"></div>  
+    <div class="drag-target" id="item3" draggable="true"></div>
+    <div class="drag-target" id="item4" draggable="true"></div>
+    <div class="drag-target" id="item5" draggable="true"></div>  
+    <div class="drag-target" id="item6" draggable="true"></div>
+    <div class="drag-target" id="item7" draggable="true"></div>
+    <div class="drag-target" id="item8" draggable="true"></div>  
+    <div class="drag-target" id="item9" draggable="true"></div>
+    <div class="drag-target" id="item10" draggable="true"></div>
+    <div class="drag-target" id="item11" draggable="true"></div>  
+    <div class="drag-target" id="item12" draggable="true"></div>
+    <div class="drag-target" id="item13" draggable="true"></div>
+    <div class="drag-target" id="item14" draggable="true"></div>  
+    <div class="drag-target" id="item15" draggable="true"></div>
+    <div class="drag-target" id="item16" draggable="true"></div>
+        </div>
+    </div>
+
+    <script>
+        let interactiveMap = L.map('interactiveMap').setView([53.430127, 14.564802], 18);
+        L.tileLayer.provider('Esri.WorldImagery').addTo(interactiveMap);
+        let mapMarker = L.marker([53.430127, 14.564802]).addTo(interactiveMap);
+        mapMarker.bindPopup("<strong>Hello!</strong><br>This is a popup.");
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        document.getElementById("downloadButton").addEventListener("click", function () {
+            leafletImage(interactiveMap, function (err, canvas) {
+                let mapCanvas = document.getElementById("mapCanvas");
+                let canvasContext = mapCanvas.getContext("2d");
+
+                canvasContext.drawImage(canvas, 0, 0, 300, 150);
+                let allItemCanvases = [];
+
+                let rectWidth = Math.floor(300 / 4);
+                let rectHeight = Math.floor(150 / 4);
+
+                for (let row = 0; row < 4; row++) {
+                    for (let col = 0; col < 4; col++) {
+                        let x = col * rectWidth;
+                        let y = row * rectHeight;
+
+                        let imageData = canvasContext.getImageData(x, y, rectWidth, rectHeight);
+
+                        let itemCanvas = document.createElement("canvas");
+                        itemCanvas.width = rectWidth;
+                        itemCanvas.height = rectHeight;
+                        let itemContext = itemCanvas.getContext("2d");
+
+                        itemContext.putImageData(imageData, 0, 0);
+                        itemContext.strokeStyle = "black";
+                        itemContext.lineWidth = 1;
+                        itemContext.strokeRect(0, 0, rectWidth, rectHeight);
+
+                        itemCanvas.id = "item" + (row * 4 + col + 1);
+                        itemCanvas.classList.add("item", "draggable");
+                        itemCanvas.draggable = true;
+
+                        allItemCanvases.push(itemCanvas);
+                    }
+                }
+
+                shuffleArray(allItemCanvases);
+
+                allItemCanvases.forEach(function (itemCanvas) {
+                    document.body.appendChild(itemCanvas);
+                });
+            });
+        });
+
+        document.getElementById("locateButton").addEventListener("click", function(event) {
+            if (!navigator.geolocation) {
+                console.log("Geolocation is not supported.");
+            }
+
+            navigator.geolocation.getCurrentPosition(position => {
+                console.log(position);
+                let latitude = position.coords.latitude;
+                let longitude = position.coords.longitude;
+
+                interactiveMap.setView([latitude, longitude]);
+            }, positionError => {
+                console.error(positionError);
+            });
+        });
+
+        let draggedItem;
+
+        document.addEventListener("drag", function (event) {
+            draggedItem = event.target;
+        });
+
+        document.addEventListener("dragover", function (event) {
+            event.preventDefault();
+        });
+
+        document.addEventListener("drop", function (event) {
+            event.preventDefault();
+
+            if (event.target.classList.contains("drag-target")) {
+                event.target.appendChild(draggedItem);
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const draggableElements = document.querySelectorAll(".draggable");
+
+            draggableElements.forEach(function (element) {
+                element.addEventListener("dragstart", function (event) {
+                    event.dataTransfer.setData("text/plain", "");
+                });
+            });
+        });
+
+        document.getElementById("checkButton").addEventListener("click", function () {
+            checkPuzzlePlacement();
+        });
+
+        function checkPuzzlePlacement() {
+            const puzzleContainer = document.getElementById("elementsContainer");
+            const puzzleItems = puzzleContainer.querySelectorAll(".drag-target");
+
+            let correctPlacement = true;
+
+            puzzleItems.forEach(function (item, index) {
+                const expectedId = "item" + (index + 1);
+                const currentId = item.querySelector("canvas").id;
+
+                if (currentId !== expectedId) {
+                    correctPlacement = false;
+                    console.log(`Incorrect placement for ${currentId}`);
+                }
+            });
+
+            if (correctPlacement) {
+                console.log("Puzzle correctly placed!");
+            } else {
+                console.log("Some puzzle pieces are not in the correct position.");
+            }
+        }
+    </script>
+</body>
+</html>
