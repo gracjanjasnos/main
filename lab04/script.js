@@ -51,10 +51,8 @@ const WeatherApp = class {
     }
 
     drawWeather() {
-        // clear previous blocks
         this.resultsBlock.innerHTML = '';
 
-        // add current weather block
         if (this.currentWeather) {
             const date = new Date(this.currentWeather.dt * 1000);
             const dateTimeString = `${date.toLocaleDateString("pl-PL")} ${date.toLocaleTimeString("pl-PL")}`;
@@ -68,7 +66,6 @@ const WeatherApp = class {
             this.resultsBlock.appendChild(weatherBlock);
         }
 
-        // add forecast weather blocks
         if (this.forecast && this.forecast.length > 0) {
             for (let i = 0; i < this.forecast.length; i++) {
                 let weather = this.forecast[i];
