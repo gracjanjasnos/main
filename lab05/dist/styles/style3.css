@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Courier New', monospace; 
+    background-color: #d3d3d3; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #4caf50; 
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title h1 {
+    margin: 0;
+    font-size: 28px; 
+    transition: color 0.3s;
+    color: #ff8c00; 
+  }
+  
+  .title h2 {
+    margin: 0;
+    font-size: 20px; 
+    transition: color 0.3s;
+    border-top: 2px solid #ff8c00; 
+    padding-bottom: 5px;
+    color: #ff8c00; 
+  }
+  
+  .menu {
+    flex: 0 0 250px;
+    background-color: #4caf50; 
+    color: #fff;
+    padding: 20px;
+    border-right: 2px solid #ff8c00; 
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .menu li {
+    margin: 10px 0;
+  }
+  
+  .menu a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s;
+    font-size: 18px; 
+    padding: 10px 20px;
+    border: 2px solid #ff8c00; 
+    border-radius: 5px;
+    text-align: center;
+    display: block;
+  }
+  
+  .menu a:hover {
+    background-color: #ff8c00;
+    color: #fff;
+    border-color: #4caf50;
+  }
+  
+  .image {
+    flex: 0 0 200px;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d3d3d3; 
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .image::before {
+    content: "Reklama";
+    font-weight: bold;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    background-color: #ff8c00; 
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  #change-style-button {
+    background-color: #616261;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.8;
+    font-family: 'Arial', sans-serif;
+    transition: background-color 0.3s, opacity 0.3s;
+    display: inline-block;
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  #change-style-button:hover {
+    background-color: #3d3f3d;
+    opacity: 1;
+  }
+  
+  main {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    max-height: 80vh;
+  }
+  
+  .content:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .info {
+    flex: 1;
+    text-align: left;
+    padding: 20px;
+    background-image: url('tlo.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  footer {
+    background-color: #4caf50; 
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  @media (max-width: 768px) {
+    .image {
+      display: none;
+    }
+  
+    .menu {
+      flex: 0 0 100%; 
+      border-right: none; 
+      padding: 0;
+    }
+  
+    .menu ul {
+      flex-direction: column; 
+    }
+  
+    .menu li {
+      margin: 0; 
+    }
+  
+    .menu a {
+      padding: 10px 0; 
+      border: none; 
+    }
+  
+    main {
+      flex-direction: column;
+      padding: 10px;
+    }
+  
+    .content {
+      max-height: none; 
+    }
+  
+    .menu li {
+      margin-bottom: 10px;
+    }
+  
+    .title {
+      text-align: center;
+      text-align: left;
+    }
+    .title h1 {
+      font-size: 24px; 
+    }
+    .title h2 {
+      font-size: 18px; 
+      border-top: none; 
+    }
+  }
+  
